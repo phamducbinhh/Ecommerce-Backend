@@ -11,4 +11,17 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
   logging: false
 })
 
-module.exports = sequelize
+const connectDatabase = async () => {
+  try {
+    await sequelize.authenticate()
+    console.log('Database connected.')
+  } catch (error) {
+    console.error('Unable to connect to the database:', error)
+    throw error
+  }
+}
+
+module.exports = {
+  sequelize,
+  connectDatabase
+}
