@@ -21,6 +21,5 @@ const startServer = async (): Promise<void> => {
     console.error('App server error:', (err as Error).stack)
   }
 }
-
 // Gọi hàm startServer để bắt đầu server khi ứng dụng được chạy
 startServer()
