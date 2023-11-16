@@ -49,17 +49,17 @@ class AuthServices {
       throw new Error(error.message)
     }
   }
-  public async login({ email, password }: RegistrationData): Promise<any> {
+  public async login({ username, password }: RegistrationData): Promise<any> {
     try {
       const user = await User.findOne({
-        where: { email: email }
+        where: { username: username }
       })
       if (!user) {
-        throw new Error('Email không tồn tại trong hệ thống')
+        throw new Error('Tài khoản không tồn tại trong hệ thống!')
       }
       const isPasswordMatch = await this.comparePassword(password, user.password)
       if (!isPasswordMatch) {
-        throw new Error('Mật khẩu không chính xác')
+        throw new Error('Mật khẩu không chính xác!')
       }
       return {
         id: user.id,
