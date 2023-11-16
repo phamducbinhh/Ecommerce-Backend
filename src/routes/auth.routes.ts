@@ -1,5 +1,5 @@
 const express = require('express')
-const { authController } = require('../controllers/index')
+const { AuthController } = require('../controllers/index')
 const { validateRegister, validateLogin } = require('../config/validate')
 const router = express.Router()
 
@@ -8,8 +8,8 @@ const router = express.Router()
  */
 
 const AuthRoutesApi = (app: any) => {
-  router.post('/register', validateRegister, authController.registerNewsUser)
-  router.post('/login', validateLogin, authController.loginNewsUser)
+  router.post('/register', validateRegister, AuthController.register)
+  router.post('/login', validateLogin, AuthController.login)
   return app.use('/api/v1/', router)
 }
 
