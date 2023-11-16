@@ -3,12 +3,14 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { connectDatabase } = require('./config/database')
+const { AuthRoutesApi } = require('./routes/index')
 dotenv.config()
 
 const app = express()
 app.use(cors()) // Sử dụng middleware Cors để xử lý CORS
 app.use(bodyParser.json()) // Sử dụng middleware body-parser để xử lý dữ liệu JSON
 app.use(bodyParser.urlencoded({ extended: true })) // Sử dụng middleware body-parser để xử lý dữ liệu từ form
+AuthRoutesApi(app)
 
 // Hàm bắt đầu server
 const startServer = async (): Promise<void> => {
