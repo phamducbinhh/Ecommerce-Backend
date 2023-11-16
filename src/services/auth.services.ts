@@ -29,19 +29,22 @@ class AuthServices {
       if (await this.isEmailExists(email)) {
         throw new Error('Email đã tồn tại trong hệ thống')
       }
-
       const hashPassword = await this.hashPassword(password)
       const response = await User.create({
         email,
         username,
         password: hashPassword
       })
-
-      // Trả về một đối tượng với các trường dataValues và password được ẩn đi
-      return {
-        ...response.dataValues,
-        password: 'Not show'
+      // Loại bỏ trường password trước khi trả về response
+      const responseData = {
+        id: response.id,
+        email: response.email,
+        username: response.username,
+        updatedAt: response.updatedAt,
+        createdAt: response.createdAt
       }
+      // Trả về một đối tượng với các trường dataValues và password được ẩn đi
+      return responseData
     } catch (error: any) {
       throw new Error(error.message)
     }
