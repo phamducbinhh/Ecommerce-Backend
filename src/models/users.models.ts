@@ -1,14 +1,8 @@
-const { DataTypes, Model } = require('sequelize')
+const { DataTypes } = require('sequelize')
 const { sequelize } = require('../config/database')
 
-class User extends Model {
-  public id!: number
-  public email!: string
-  public username!: string
-  public password!: string
-}
-
-User.init(
+const User = sequelize.define(
+  'users',
   {
     id: {
       type: DataTypes.INTEGER,
@@ -29,8 +23,6 @@ User.init(
     }
   },
   {
-    sequelize,
-    modelName: 'User',
     tableName: 'users'
   }
 )

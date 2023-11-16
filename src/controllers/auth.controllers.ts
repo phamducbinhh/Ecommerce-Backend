@@ -21,13 +21,14 @@ class AuthController {
       // Gọi phương thức đăng ký từ AuthService
       const response = await AuthServices.register(req.body)
       res.status(HttpStatusCode.CREATED).json({
-        message: `${AuthController.SUCCESS_MESSAGE} - Đăng ký tài khoản thành công`,
+        message: `${AuthController.SUCCESS_MESSAGE}`,
         success: true,
         data: response
       })
     } catch (exception: any) {
+      console.log('exception', exception)
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        message: `${AuthController.ERROR_MESSAGE} - ${exception.message}`,
+        message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
         success: false
       })
     }
@@ -44,13 +45,14 @@ class AuthController {
       // Gọi phương thức đăng nhập từ AuthService
       const response = await AuthServices.login(req.body)
       res.status(HttpStatusCode.SUCCESS).json({
-        message: `${AuthController.SUCCESS_MESSAGE} - Đăng nhập thành công`,
+        message: `${AuthController.SUCCESS_MESSAGE}`,
         success: true,
         data: response
       })
     } catch (exception: any) {
+      console.log('exception', exception)
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
-        message: `${AuthController.ERROR_MESSAGE} - ${exception.message}`,
+        message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
         success: false
       })
     }
