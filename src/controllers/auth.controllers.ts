@@ -6,16 +6,12 @@ class AuthController {
   // Các hằng số sử dụng trong class
   private static readonly SUCCESS_MESSAGE = 'Thành công'
   private static readonly ERROR_MESSAGE = 'Lỗi'
-  // Phương thức xử lý lỗi chung
-  private handleErrors(res: any, status: number, errorMessage: string) {
-    return res.status(status).json({ errors: errorMessage })
-  }
   // Phương thức đăng ký tài khoản
   public async register(req: any, res: any): Promise<any> {
     // Kiểm tra lỗi từ express-validator
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return this.handleErrors(res, HttpStatusCode.BAD_REQUEST, errors.array()[0].msg)
+      return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array()[0].msg })
     }
     try {
       // Gọi phương thức đăng ký từ AuthService
@@ -39,7 +35,7 @@ class AuthController {
     // Kiểm tra lỗi từ express-validator
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return this.handleErrors(res, HttpStatusCode.BAD_REQUEST, errors.array()[0].msg)
+      return res.status(HttpStatusCode.BAD_REQUEST).json({ errors: errors.array()[0].msg })
     }
     try {
       // Gọi phương thức đăng nhập từ AuthService
