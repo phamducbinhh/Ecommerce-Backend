@@ -1,6 +1,6 @@
 const bcrypt = require('bcrypt')
-const User = require('../models/users.models')
-const { generateToken } = require('../config/generateToken')
+const User = require('../models/users.models.ts')
+const { generateToken } = require('../config/generateToken.ts')
 
 interface RegistrationData {
   email: string

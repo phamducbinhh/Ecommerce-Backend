@@ -1,5 +1,5 @@
 const HttpStatusCode = require('../constants/HttpStatusCode')
-const { AuthServices } = require('../services/index')
+const { AuthServices } = require('../services/index.ts')
 const { validationResult } = require('express-validator')
 
 class AuthController {

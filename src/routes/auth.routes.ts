@@ -1,6 +1,6 @@
 const express = require('express')
-const { AuthController } = require('../controllers/index')
-const { validateRegister, validateLogin } = require('../config/validate')
+const { AuthController } = require('../controllers/index.ts')
+const { validateRegister, validateLogin } = require('../config/validate.ts')
 const router = express.Router()
 
 /**

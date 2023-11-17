@@ -1,4 +1,4 @@
-const AuthRoutesApi = require('./auth.routes')
+const AuthRoutesApi = require('./auth.routes.ts')
 
 module.exports = {
   AuthRoutesApi

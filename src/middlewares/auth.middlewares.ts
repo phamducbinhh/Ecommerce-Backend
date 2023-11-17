@@ -1,4 +1,3 @@
-import { Request, Response, NextFunction } from 'express'
 const jwt = require('jsonwebtoken')
 const HttpStatusCode = require('../constants/HttpStatusCode.ts')
 
@@ -7,7 +6,7 @@ interface JwtObject {
 }
 
 // Middleware kiểm tra xác thực token
-const isAuth = async (req: Request, res: Response, next: NextFunction): Promise<any> => {
+const isAuth = async (req: any, res: any, next: any): Promise<any> => {
   // Lấy token từ header của request
   const token: string | undefined = req.headers?.authorization?.split(' ')[1]
   // Nếu không có token, trả về lỗi
