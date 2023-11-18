@@ -62,6 +62,7 @@ class AuthServices {
       throw new Error(error.message)
     }
   }
+
   public async login({ username, password }: RegistrationData): Promise<any> {
     try {
       const user = await User.findOne({

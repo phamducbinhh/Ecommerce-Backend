@@ -6,7 +6,7 @@ interface JwtObject {
 }
 
 // Middleware kiểm tra xác thực token
-const isAuth = async (req: any, res: any, next: any): Promise<any> => {
+const authenticate = async (req: any, res: any, next: any): Promise<any> => {
   // Lấy token từ header của request
   const token: string | undefined = req.headers?.authorization?.split(' ')[1]
   // Nếu không có token, trả về lỗi
@@ -36,4 +36,4 @@ const isAuth = async (req: any, res: any, next: any): Promise<any> => {
   }
 }
 
-module.exports = isAuth
+module.exports = authenticate
