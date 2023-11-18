@@ -7,6 +7,7 @@ class UserServices {
       const limit = parseInt(req.query.limit || 10)
       const offset = (page - 1) * limit
       const { rows, count } = await User.findAndCountAll({
+        // là một mảng chứa tên các trường (fields) mà bạn muốn lấy từ cơ sở dữ liệu khi thực hiện truy vấn
         attributes: ['id', 'fullname', 'username', 'email', 'phone', 'address'],
         offset,
         limit
@@ -41,9 +42,19 @@ class UserServices {
           id
         }
       })
-      return user
-    } catch (error) {
-      throw new Error('Không thể lấy thông tin người dùng')
+      if (!user) {
+        throw new Error('Không tìm thấy người dùng với id đã cho')
+      }
+      const userId = await User.findOne({
+        where: {
+          id
+        },
+        // là một mảng chứa tên các trường (fields) mà bạn muốn lấy từ cơ sở dữ liệu khi thực hiện truy vấn
+        attributes: ['id', 'fullname', 'username', 'email', 'phone', 'address']
+      })
+      return userId
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
   public async updateUser(id: number, data: any): Promise<any> {

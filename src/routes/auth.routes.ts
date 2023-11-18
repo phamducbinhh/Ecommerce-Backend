@@ -11,5 +11,6 @@ const userRouter = express.Router()
 userRouter.post('/register', validateRegister, AuthController.register)
 userRouter.post('/login', validateLogin, AuthController.login)
 userRouter.get('/', isAuth, UserController.getListUser)
+userRouter.get('/:id', isAuth, UserController.getUserById)
 
 module.exports = userRouter
