@@ -39,6 +39,10 @@ class AuthController {
     try {
       // Gọi phương thức đăng nhập từ AuthService
       const response = await AuthServices.login(req.body)
+      res.cookie('access_token', response.token, {
+        httpOnly: true,
+        maxAge: 3 * 24 * 60 * 60 * 1000
+      })
       res.status(HttpStatusCode.SUCCESS).json({
         message: `${AuthController.SUCCESS_MESSAGE}`,
         success: true,
