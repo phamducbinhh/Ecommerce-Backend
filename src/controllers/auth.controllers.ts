@@ -1,6 +1,7 @@
 const HttpStatusCode = require('../constants/HttpStatusCode')
 const { AuthServices } = require('../services/index.ts')
 const { validationResult } = require('express-validator')
+const { generateRefreshToken } = require('../config/refreshToken.ts')
 
 class AuthController {
   // Các hằng số sử dụng trong class
@@ -39,8 +40,12 @@ class AuthController {
     try {
       // Gọi phương thức đăng nhập từ AuthService
       const response = await AuthServices.login(req.body)
-      res.cookie('access_token', response.token, {
+      const refreshToken = generateRefreshToken(response.id)
+      res.cookie('refreshToken', refreshToken, {
         httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict',
         maxAge: 3 * 24 * 60 * 60 * 1000
       })
       res.status(HttpStatusCode.SUCCESS).json({
