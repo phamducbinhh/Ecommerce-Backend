@@ -64,4 +64,6 @@ ProductsCatgory.init(
   }
 )
 
+ProductsCatgory.sync({ alter: true })
+
 module.exports = ProductsCatgory

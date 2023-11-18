@@ -92,4 +92,6 @@ Products.init(
   }
 )
 
+Products.sync({ alter: true })
+
 module.exports = Products
