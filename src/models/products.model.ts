@@ -1,5 +1,6 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('../config/database.ts')
+const ProductsCatgory = require('./productsCategory.model.ts')
 
 class Products extends Model {}
 
@@ -29,22 +30,26 @@ Products.init(
     },
     category_id: {
       type: DataTypes.INTEGER,
-      allowNull: true
+      allowNull: true,
+      references: {
+        model: ProductsCatgory,
+        key: 'id'
+      }
     },
     price: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     countInStock: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     rating: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     numReviews: {
-      type: DataTypes.NUMBER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
     sort: {
@@ -91,6 +96,8 @@ Products.init(
     modelName: 'Products'
   }
 )
+
+Products.belongsTo(ProductsCatgory, { foreignKey: 'category_id' })
 
 Products.sync({ alter: true })
 
