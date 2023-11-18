@@ -10,6 +10,7 @@ const userRouter = express.Router()
 
 userRouter.post('/register', validateRegister, AuthController.register)
 userRouter.post('/login', validateLogin, AuthController.login)
+userRouter.post('/refresh', authenticate, AuthController.refreshToken)
 userRouter.get('/', authenticate, UserController.getListUser)
 userRouter.get('/:id', authenticate, UserController.getUserById)
 userRouter.put('/:id', authenticate, UserController.updateUser)

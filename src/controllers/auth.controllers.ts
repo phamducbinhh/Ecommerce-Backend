@@ -2,6 +2,8 @@ const HttpStatusCode = require('../constants/HttpStatusCode')
 const { AuthServices } = require('../services/index.ts')
 const { validationResult } = require('express-validator')
 const { generateRefreshToken } = require('../config/refreshToken.ts')
+const { generateToken } = require('../config/generateToken.ts')
+const jwt = require('jsonwebtoken')
 
 class AuthController {
   // Các hằng số sử dụng trong class
@@ -52,6 +54,46 @@ class AuthController {
         message: `${AuthController.SUCCESS_MESSAGE}`,
         success: true,
         data: response
+      })
+    } catch (exception: any) {
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
+        success: false
+      })
+    }
+  }
+
+  // refresh token
+  public async refreshToken(req: any, res: any): Promise<any> {
+    try {
+      // lấy ra token từ user
+      const refreshToken = req.cookies.refreshToken
+      if (!refreshToken) {
+        res.status(HttpStatusCode.UNAUTHORIZED).json({
+          message: `${AuthController.ERROR_MESSAGE}`,
+          success: false
+        })
+      }
+      jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, (err: any, user: any) => {
+        if (err) {
+          console.log(err)
+        }
+        //tạo mới access_token
+        const newAccessToken = generateToken(req.body.id)
+        const newRefreshToken = generateRefreshToken(req.body.id)
+        res.cookie('refreshToken', newRefreshToken, {
+          httpOnly: true,
+          secure: false,
+          path: '/',
+          sameSite: 'strict',
+          maxAge: 3 * 24 * 60 * 60 * 1000
+        })
+        // Trả về access token mới
+        res.status(HttpStatusCode.SUCCESS).json({
+          message: `${AuthController.SUCCESS_MESSAGE}`,
+          success: true,
+          data: newAccessToken
+        })
       })
     } catch (exception: any) {
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
