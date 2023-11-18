@@ -6,6 +6,7 @@ interface RegistrationData {
   email: string
   password: string
   username?: string
+  phone?: number
 }
 
 class AuthServices {
@@ -20,19 +21,30 @@ class AuthServices {
     return !!existingUser
   }
 
+  private async isPhoneExists(phone: number | undefined): Promise<boolean> {
+    const existingUser = await User.findOne({
+      where: { phone: phone }
+    })
+    return !!existingUser
+  }
+
   private async comparePassword(password: string, hashPassword: string): Promise<boolean> {
     return bcrypt.compare(password, hashPassword)
   }
 
-  public async register({ email, password, username }: RegistrationData): Promise<any> {
+  public async register({ email, password, username, phone }: RegistrationData): Promise<any> {
     try {
       if (await this.isEmailExists(email)) {
         throw new Error('Email đã tồn tại trong hệ thống')
+      }
+      if (await this.isPhoneExists(phone)) {
+        throw new Error('Số điện thoại đã tồn tại trong hệ thống')
       }
       const hashPassword = await this.hashPassword(password)
       const response = await User.create({
         email,
         username,
+        phone,
         password: hashPassword
       })
       // Loại bỏ trường password trước khi trả về response
@@ -40,6 +52,7 @@ class AuthServices {
         id: response.id,
         email: response.email,
         username: response.username,
+        phone: response.phone,
         updatedAt: response.updatedAt,
         createdAt: response.createdAt
       }

@@ -12,7 +12,13 @@ User.init(
     },
     email: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      unique: true,
+      validate: {
+        min: 10,
+        max: 50,
+        isEmail: true
+      }
     },
     username: {
       type: DataTypes.STRING,
@@ -20,7 +26,17 @@ User.init(
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: false
+      allowNull: false,
+      validate: {
+        min: 6
+      }
+    },
+    phone: {
+      type: DataTypes.STRING,
+      allowNull: false,
+      validate: {
+        is: /^[0-9]+$/
+      }
     }
   },
   {
