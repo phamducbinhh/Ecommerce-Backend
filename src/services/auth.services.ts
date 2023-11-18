@@ -85,6 +85,24 @@ class AuthServices {
       throw new Error(error.message)
     }
   }
+
+  public async logout(res: any): Promise<any> {
+    try {
+      // Xóa cookie refresh token bằng cách sử dụng res.clearCookie
+      res.clearCookie('refreshToken', {
+        httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict'
+      })
+      return {
+        message: 'Logout thành công',
+        success: true
+      }
+    } catch (error: any) {
+      throw new Error(error.message)
+    }
+  }
 }
 
 module.exports = new AuthServices()

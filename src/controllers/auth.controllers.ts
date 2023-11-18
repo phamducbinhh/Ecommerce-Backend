@@ -102,6 +102,25 @@ class AuthController {
       })
     }
   }
+
+  // logout
+  public async logout(req: any, res: any): Promise<any> {
+    try {
+      // Gọi phương thức logout từ AuthService
+      const response = await AuthServices.logout(res)
+      // Trả về thông báo logout thành công
+      res.status(HttpStatusCode.SUCCESS).json({
+        message: response.message,
+        success: response.success
+      })
+    } catch (exception: any) {
+      // Xử lý lỗi khi logout
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
+        success: false
+      })
+    }
+  }
 }
 
 module.exports = new AuthController()
