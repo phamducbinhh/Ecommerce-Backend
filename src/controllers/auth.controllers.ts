@@ -66,37 +66,37 @@ class AuthController {
   // refresh token
   public async refreshToken(req: any, res: any): Promise<any> {
     try {
-      // lấy ra token từ user
+      // Lấy ra refresh token từ cookie
       const refreshToken = req.cookies.refreshToken
       if (!refreshToken) {
-        res.status(HttpStatusCode.UNAUTHORIZED).json({
+        return res.status(HttpStatusCode.UNAUTHORIZED).json({
           message: `${AuthController.ERROR_MESSAGE}`,
           success: false
         })
       }
-      jwt.verify(refreshToken, process.env.JWT_SECRET_KEY, (err: any, user: any) => {
-        if (err) {
-          console.log(err)
-        }
-        //tạo mới access_token
-        const newAccessToken = generateToken(req.body.id)
-        const newRefreshToken = generateRefreshToken(req.body.id)
-        res.cookie('refreshToken', newRefreshToken, {
-          httpOnly: true,
-          secure: false,
-          path: '/',
-          sameSite: 'strict',
-          maxAge: 3 * 24 * 60 * 60 * 1000
-        })
-        // Trả về access token mới
-        res.status(HttpStatusCode.SUCCESS).json({
-          message: `${AuthController.SUCCESS_MESSAGE}`,
-          success: true,
-          data: newAccessToken
-        })
+      // Kiểm tra và giải mã refresh token
+      const decoded = jwt.verify(refreshToken, process.env.JWT_SECRET_KEY)
+      // Tạo mới access token và refresh token
+      const newAccessToken = generateToken(decoded.id)
+      const newRefreshToken = generateRefreshToken(decoded.id)
+      // Lưu refresh token mới vào cookie
+      res.cookie('refreshToken', newRefreshToken, {
+        httpOnly: true,
+        secure: false,
+        path: '/',
+        sameSite: 'strict',
+        maxAge: 3 * 24 * 60 * 60 * 1000
+      })
+
+      // Trả về access token mới
+      return res.status(HttpStatusCode.SUCCESS).json({
+        message: `${AuthController.SUCCESS_MESSAGE}`,
+        success: true,
+        data: newAccessToken
       })
     } catch (exception: any) {
-      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+      // Xử lý lỗi khi giải mã hoặc tạo mới token
+      return res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
         success: false
       })
