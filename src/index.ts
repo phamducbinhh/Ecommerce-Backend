@@ -3,6 +3,8 @@ const dotenv = require('dotenv')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const { connectDatabase } = require('./config/database.ts')
+const cookieParser = require('cookie-parser')
+
 const rootRouter = require('./routes/index.ts')
 dotenv.config()
 
@@ -16,6 +18,7 @@ app.use(
 // Sử dụng middleware Cors để xử lý CORS
 app.use(bodyParser.json()) // Sử dụng middleware body-parser để xử lý dữ liệu JSON
 app.use(bodyParser.urlencoded({ extended: true })) // Sử dụng middleware body-parser để xử lý dữ liệu từ form
+app.use(cookieParser())
 app.use('/api/v1', rootRouter)
 
 // Hàm bắt đầu server
