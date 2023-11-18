@@ -11,7 +11,7 @@ const isAuth = async (req: any, res: any, next: any): Promise<any> => {
   const token: string | undefined = req.headers?.authorization?.split(' ')[1]
   // Nếu không có token, trả về lỗi
   if (!token) {
-    return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Không có token, truy cập bị từ chối' })
+    return res.status(HttpStatusCode.BAD_REQUEST).json({ message: 'Token is not valid' })
   }
   try {
     // Giải mã token và kiểm tra tính hợp lệ
@@ -21,7 +21,7 @@ const isAuth = async (req: any, res: any, next: any): Promise<any> => {
     // Nếu token hết hạn, trả về lỗi
     if (isExpired) {
       res.status(HttpStatusCode.BAD_REQUEST).json({
-        message: 'Token hết hạn'
+        message: 'token expired'
       })
       res.end()
     } else {

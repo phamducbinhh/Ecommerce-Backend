@@ -22,7 +22,6 @@ class AuthController {
         data: response
       })
     } catch (exception: any) {
-      console.log('exception', exception)
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
         success: false
@@ -46,7 +45,6 @@ class AuthController {
         data: response
       })
     } catch (exception: any) {
-      console.log('exception', exception)
       res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
         message: `${AuthController.ERROR_MESSAGE} ${exception.message}`,
         success: false
