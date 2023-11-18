@@ -1,5 +1,7 @@
-const AuthRoutesApi = require('./auth.routes.ts')
+const express = require('express')
+const authRouter = require('./auth.routes.ts')
+const rootRouter = express.Router()
 
-module.exports = {
-  AuthRoutesApi
-}
+rootRouter.use('/users', authRouter)
+
+module.exports = rootRouter
