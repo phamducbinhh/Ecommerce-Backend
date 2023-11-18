@@ -35,6 +35,36 @@ class UserController {
       })
     }
   }
+  public async deleteUser(req: any, res: any): Promise<any> {
+    try {
+      const user = await UserServices.deleteUser(req.params.id)
+      res.status(HttpStatusCode.SUCCESS).json({
+        message: `${UserController.SUCCESS_MESSAGE}`,
+        success: true,
+        data: user
+      })
+    } catch (exception: any) {
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: `${UserController.ERROR_MESSAGE} ${exception.message}`,
+        success: false
+      })
+    }
+  }
+  public async updateUser(req: any, res: any): Promise<any> {
+    try {
+      const user = await UserServices.updateUser(req)
+      res.status(HttpStatusCode.SUCCESS).json({
+        message: `${UserController.SUCCESS_MESSAGE}`,
+        success: true,
+        data: user
+      })
+    } catch (exception: any) {
+      res.status(HttpStatusCode.INTERNAL_SERVER_ERROR).json({
+        message: `${UserController.ERROR_MESSAGE} ${exception.message}`,
+        success: false
+      })
+    }
+  }
 }
 
 module.exports = new UserController()

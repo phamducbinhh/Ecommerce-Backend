@@ -25,14 +25,21 @@ class UserServices {
   }
   public async deleteUser(id: number): Promise<any> {
     try {
-      const userDeleted = await User.destroy({
+      const user = await User.findOne({
         where: {
           id
         }
       })
-      return userDeleted
-    } catch (err) {
-      throw new Error('Không thể xóa người dùng')
+      if (!user) {
+        throw new Error('Không tìm thấy người dùng với id đã cho')
+      }
+      await User.destroy({
+        where: {
+          id
+        }
+      })
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
   public async getUserById(id: number): Promise<any> {
@@ -57,16 +64,33 @@ class UserServices {
       throw new Error(error.message)
     }
   }
-  public async updateUser(id: number, data: any): Promise<any> {
+  public async updateUser(req: any): Promise<any> {
+    const { fullname, email, phone, address } = req.body
+    const { id } = req.params
     try {
-      const updateUser = await User.update(data, {
-        where: {
-          id
+      await User.update(
+        {
+          fullname,
+          email,
+          phone,
+          address
+        },
+        {
+          where: {
+            id: id
+          }
         }
+      )
+      // Lấy dữ liệu mới nhất của người dùng sau khi cập nhật
+      const updatedUser = await User.findOne({
+        where: {
+          id: id
+        },
+        attributes: ['id', 'fullname', 'email', 'phone', 'address']
       })
-      return updateUser
-    } catch (error) {
-      throw new Error('Không thể cập nhật thông tin người dùng')
+      return updatedUser
+    } catch (error: any) {
+      throw new Error(error.message)
     }
   }
 }

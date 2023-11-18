@@ -12,5 +12,7 @@ userRouter.post('/register', validateRegister, AuthController.register)
 userRouter.post('/login', validateLogin, AuthController.login)
 userRouter.get('/', isAuth, UserController.getListUser)
 userRouter.get('/:id', isAuth, UserController.getUserById)
+userRouter.put('/:id', isAuth, UserController.updateUser)
+userRouter.delete('/:id', isAuth, UserController.deleteUser)
 
 module.exports = userRouter
