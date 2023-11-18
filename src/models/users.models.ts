@@ -58,14 +58,4 @@ User.init(
   }
 )
 
-// Đồng bộ hóa cơ sở dữ liệu để tạo bảng
-;(async () => {
-  try {
-    await sequelize.sync()
-    console.log('Bảng đã được tạo.')
-  } catch (error) {
-    console.error('Lỗi khi tạo bảng:', error)
-  }
-})()
-
 module.exports = User

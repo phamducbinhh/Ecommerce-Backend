@@ -1,9 +1,9 @@
 const { DataTypes, Model } = require('sequelize')
 const { sequelize } = require('../config/database.ts')
 
-class Products extends Model {}
+class ProductsCatgory extends Model {}
 
-Products.init(
+ProductsCatgory.init(
   {
     id: {
       type: DataTypes.INTEGER,
@@ -17,34 +17,6 @@ Products.init(
     },
     desc: {
       type: DataTypes.STRING,
-      allowNull: false
-    },
-    image: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    brand: {
-      type: DataTypes.STRING,
-      allowNull: false
-    },
-    category_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true
-    },
-    price: {
-      type: DataTypes.NUMBER,
-      allowNull: false
-    },
-    countInStock: {
-      type: DataTypes.NUMBER,
-      allowNull: false
-    },
-    rating: {
-      type: DataTypes.NUMBER,
-      allowNull: false
-    },
-    numReviews: {
-      type: DataTypes.NUMBER,
       allowNull: false
     },
     sort: {
@@ -87,9 +59,9 @@ Products.init(
     defaultScope: {
       attributes: { exclude: ['updated_at', 'updated_by', 'deleted_at', 'deleted_by'] }
     },
-    tableName: 'products',
-    modelName: 'Products'
+    tableName: 'productsCatgory',
+    modelName: 'ProductsCatgory'
   }
 )
 
-module.exports = Products
+module.exports = ProductsCatgory
