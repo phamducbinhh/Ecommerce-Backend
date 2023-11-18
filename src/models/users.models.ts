@@ -20,6 +20,14 @@ User.init(
         isEmail: true
       }
     },
+    fullname: {
+      type: DataTypes.STRING,
+      allowNull: true, // Không bắt buộc
+      validate: {
+        min: 6,
+        max: 30
+      }
+    },
     username: {
       type: DataTypes.STRING,
       allowNull: false
@@ -37,6 +45,10 @@ User.init(
       validate: {
         is: /^[0-9]+$/
       }
+    },
+    address: {
+      type: DataTypes.STRING,
+      allowNull: true // Không bắt buộc
     }
   },
   {
