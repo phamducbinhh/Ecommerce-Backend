@@ -4,5 +4,6 @@ const User = require('./users.models')
 
 module.exports = {
   Products,
-  ProductsCatgory
+  ProductsCatgory,
+  User
 }
