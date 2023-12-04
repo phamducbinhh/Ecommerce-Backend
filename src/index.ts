@@ -11,7 +11,7 @@ dotenv.config()
 const app = express()
 app.use(
   cors({
-    origin: 'http://localhost:8080',
+    origin: 'http://localhost:8000',
     credentials: true
   })
 )
@@ -25,8 +25,8 @@ app.use('/api/v1', rootRouter)
 const startServer = async (): Promise<void> => {
   try {
     await connectDatabase() // Kết nối đến cơ sở dữ liệu trước khi bắt đầu server
-    app.listen(process.env.PORT || 8080, () => {
-      console.log(`App server listening on port: ${process.env.PORT || 8080}`)
+    app.listen(process.env.PORT || 8000, () => {
+      console.log(`App server listening on port: ${process.env.PORT || 8000}`)
     })
   } catch (err) {
     console.error('App server error:', (err as Error).stack)
